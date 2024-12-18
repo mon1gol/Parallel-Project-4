@@ -1,0 +1,15 @@
+﻿  Dnevnik.cpp
+  Lesson.cpp
+  Schedule.cpp
+  SchoolDay.cpp
+  main.cpp
+  Student.cpp
+D:\Mitrichev\Project4.Core\SchoolLife\SchoolLife.Core\Student.cpp(21,72): warning C4267: аргумент: преобразование из "size_t" в "_Ty"; возможна потеря данных
+D:\Mitrichev\Project4.Core\SchoolLife\SchoolLife.Core\Student.cpp(21,72): warning C4267:         with
+D:\Mitrichev\Project4.Core\SchoolLife\SchoolLife.Core\Student.cpp(21,72): warning C4267:         [
+D:\Mitrichev\Project4.Core\SchoolLife\SchoolLife.Core\Student.cpp(21,72): warning C4267:             _Ty=int
+D:\Mitrichev\Project4.Core\SchoolLife\SchoolLife.Core\Student.cpp(21,72): warning C4267:         ]
+  Teacher.cpp
+D:\Mitrichev\Project4.Core\SchoolLife\SchoolLife.Core\Teacher.cpp(52,20): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+  Создание кода...
+  SchoolLife.Core.vcxproj -> D:\Mitrichev\Project4.Core\SchoolLife\x64\Debug\SchoolLife.Core.exe
