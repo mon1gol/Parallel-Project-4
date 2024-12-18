@@ -5,6 +5,7 @@
 #include <iostream>
 #include <iomanip>
 #include <ctime>
+#include <mpi.h>
 
 Student::Student(const std::string& s, const std::string& n, const std::string& p)
     : surname(s), name(n), patronymic(p), _gen(_rd()) {
@@ -39,27 +40,34 @@ Student& Student::operator=(Student&& other) noexcept {
 /// Получает ответ учителя, если это вызов, то отвечает
 /// </summary>
 /// <param name="message"></param>
-void Student::ListenToTeacher(const std::string& message) {
-    if (message.find("сейчас урок") != std::string::npos)
+void Student::ListenToTeacher() {
+    char message[100];
+    MPI_Recv(message, 100, MPI_CHAR, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+
+    std::string receivedMessage = message;
+    
+    if (receivedMessage.find("сейчас урок") != std::string::npos)
     {
-        LogResponse(message);
+        LogResponse(receivedMessage);
 
         if (std::uniform_real_distribution<>(0.0, 1.0)(_gen) < 0.4)
         {
             std::string response = STUDENT_WELCOME_PHRASES[rand() % STUDENT_WELCOME_PHRASES.size()];
             LogResponse(response);
+            MPI_Send(response.c_str(), response.length() + 1, MPI_CHAR, 0, 0, MPI_COMM_WORLD);
         }
     }
 
-    if (message.find("оценка") != std::string::npos)
+    if (receivedMessage.find("оценка") != std::string::npos)
     {
-        LogResponse(message);
+        LogResponse(receivedMessage);
     }
 
-    if (message.find(surname) != std::string::npos) {
+    if (receivedMessage.find(surname) != std::string::npos) {
         std::string response = STUDENT_RESPONSES[rand() % STUDENT_RESPONSES.size()];
-        LogResponse(message);
+        LogResponse(receivedMessage);
         LogResponse(response);
+        MPI_Send(response.c_str(), response.length() + 1, MPI_CHAR, 0, 0, MPI_COMM_WORLD);
     }
 }
 

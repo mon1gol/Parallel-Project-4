@@ -3,10 +3,10 @@
 #include "Teacher.h"
 #include "Student.h"
 #include "Dnevnik.h"
-#include "mpi.h"
+#include <mpi.h>
 
 
-int main()
+int main(int argc, char* argv[])
 {
     std::vector<Student> students;
     std::vector<Dnevnik> dnevniki;
@@ -21,9 +21,20 @@ int main()
 
     Teacher t("Элеонора Артуровна", dnevniki);
 
+    MPI_Init(&argc, &argv);
+    int rank, size;
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    MPI_Comm_size(MPI_COMM_WORLD, &size);
+
     for (int i = 0; i < SCHEDULE.school_dyas.size(); i++) {
         for (int j = 0; j < SCHEDULE.school_dyas[i].lessons.size(); j++) {
-            t.СonductLesson(SCHEDULE.school_dyas[i].subject, SCHEDULE.school_dyas[i].lessons[j], students);
+            if (rank == 0) {
+                t.СonductLesson(SCHEDULE.school_dyas[i].subject, SCHEDULE.school_dyas[i].lessons[j], students);
+            }
+            else
+            {
+                students[rank - 1].ListenToTeacher();
+            }
         }
     }
 
@@ -33,6 +44,7 @@ int main()
     }
 
     std::cout << "Hello World!\n";
+    MPI_Finalize();
 }
 
 // Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"

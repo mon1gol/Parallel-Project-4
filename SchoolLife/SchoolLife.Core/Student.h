@@ -22,7 +22,7 @@ public:
 
     Student(const std::string& s, const std::string& n, const std::string& p);
     int GetRandomGrade();
-    void ListenToTeacher(const std::string& message);
+    void ListenToTeacher();
     void LogResponse(const std::string& response);
     Student(const Student&) = delete;
     Student& operator=(const Student&) = delete;
